@@ -1,0 +1,21 @@
+# Copy to ~/.config/flow-stt/config.toml — every key is optional.
+
+model = "large-v3-turbo"
+device = "cuda"
+compute_type = "int8_float16"   # drops to "int8" automatically if unsupported
+language = "en"
+
+hotkey = "KEY_RIGHTALT"         # hold to dictate
+cleanup_hotkey = "KEY_RIGHTCTRL" # hold to dictate, then LLM-clean
+always_clean = false
+
+paste_method = "ctrl+v"         # or "ctrl+shift+v", or "type"
+paste_delay_ms = 150
+min_duration_ms = 250
+
+llama_url = "http://127.0.0.1:8080/v1/chat/completions"
+llama_model = "local"
+llama_timeout = 2.5
+
+# Names/jargon passed as initial_prompt so Whisper spells them right
+vocabulary = ["CTranslate2", "Hyprland", "PipeWire", "ydotoold"]
