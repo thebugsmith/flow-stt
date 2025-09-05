@@ -14,7 +14,7 @@ DEFAULT_PATH = Path("~/.config/flow-stt/config.toml").expanduser()
 class Config:
     model: str = "large-v3-turbo"
     device: str = "cuda"
-    compute_type: str = "int8_float16"
+    compute_type: str = "int8_float32"
     language: str = "en"
 
     # evdev key names, e.g. KEY_RIGHTALT

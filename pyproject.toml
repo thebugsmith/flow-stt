@@ -14,6 +14,11 @@ dependencies = [
     "evdev>=1.7.1",
 ]
 
+# CUDA runtime libs CTranslate2 needs but does not declare; transcriber.py dlopens
+# them from here, so no LD_LIBRARY_PATH is required outside systemd.
+[project.optional-dependencies]
+cuda = ["nvidia-cublas-cu12", "nvidia-cudnn-cu12"]
+
 [project.scripts]
 flow-stt = "flow_stt.daemon:main"
 
