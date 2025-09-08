@@ -9,7 +9,7 @@ hotkey = "KEY_RIGHTALT"         # hold to dictate
 cleanup_hotkey = "KEY_RIGHTCTRL" # hold to dictate, then LLM-clean
 always_clean = false
 
-paste_method = "ctrl+v"         # or "ctrl+shift+v", or "type"
+paste_method = "ctrl+v"         # or "ctrl+shift+v" (terminal), or "type" (wtype types the text)
 paste_delay_ms = 150
 min_duration_ms = 250
 

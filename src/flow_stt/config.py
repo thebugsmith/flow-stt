@@ -22,7 +22,7 @@ class Config:
     cleanup_hotkey: str = "KEY_RIGHTCTRL"
     always_clean: bool = False
 
-    # paste_method: "ctrl+v" | "ctrl+shift+v" | "type"
+    # paste_method: "ctrl+v" | "ctrl+shift+v" | "type"  (all via wtype)
     paste_method: str = "ctrl+v"
     paste_delay_ms: int = 150
 
