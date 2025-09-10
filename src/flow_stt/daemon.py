@@ -115,6 +115,7 @@ class Daemon:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="flow-stt", description="push-to-talk dictation daemon")
     ap.add_argument("-v", "--verbose", action="store_true")
+    ap.add_argument("--check", action="store_true", help="verify cuda/input/wayland/mic and exit")
     args = ap.parse_args(argv)
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
@@ -124,6 +125,10 @@ def main(argv: list[str] | None = None) -> int:
     for noisy in ("faster_whisper", "httpx2", "httpx", "huggingface_hub"):
         logging.getLogger(noisy).setLevel(logging.WARNING)
     cfg = load()
+    if args.check:
+        from .health import run as check
+
+        return 0 if check(cfg) else 1
     try:
         return Daemon(cfg).run()
     except RuntimeError as e:
