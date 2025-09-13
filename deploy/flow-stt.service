@@ -1,0 +1,25 @@
+[Unit]
+Description=flow-stt push-to-talk dictation daemon
+Documentation=https://github.com/thebugsmith/flow-stt
+# Needs the specialist session; WAYLAND_DISPLAY is imported separately (see README).
+After=pipewire.service pipewire-pulse.service
+Wants=pipewire.service
+
+[Service]
+Type=simple
+# Adjust this path if the repo is not at ~/flow-stt
+WorkingDirectory=%h/flow-stt
+ExecStart=%h/flow-stt/.venv/bin/flow-stt
+Restart=on-failure
+RestartSec=2s
+
+# CTranslate2 needs libcublas.so.12 / libcudnn_ops.so.9, which ship in the venv's
+# nvidia-* wheels. transcriber.py dlopens them in-process, but systemd starts with a
+# bare environment, so point the loader at them as well.
+Environment=LD_LIBRARY_PATH=%h/flow-stt/.venv/lib/python3.11/site-packages/nvidia/cublas/lib:%h/flow-stt/.venv/lib/python3.11/site-packages/nvidia/cudnn/lib:%h/flow-stt/.venv/lib/python3.11/site-packages/nvidia/cuda_nvrtc/lib
+
+[Install]
+# Hyprland does not start graphical-session.target on its own; starting with the
+# user manager is the portable choice. The compositor restarts the unit once
+# WAYLAND_DISPLAY has been imported (see README).
+WantedBy=default.target

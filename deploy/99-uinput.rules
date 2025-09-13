@@ -1,0 +1,4 @@
+# /etc/udev/rules.d/99-uinput.rules
+# Lets members of the uinput group create virtual input devices (needed for the
+# test harness that injects key presses, and for any remapper-style tooling).
+KERNEL=="uinput", GROUP="uinput", MODE="0660", OPTIONS+="static_node=uinput"

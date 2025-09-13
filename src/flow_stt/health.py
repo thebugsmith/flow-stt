@@ -53,7 +53,9 @@ def _input(_cfg: Config) -> tuple[bool, str]:
 
 
 def _wayland(_cfg: Config) -> tuple[bool, str]:
-    display = os.environ.get("WAYLAND_DISPLAY")
+    from .injector import _env
+
+    display = _env().get("WAYLAND_DISPLAY")
     if display:
         if not os.path.exists(f"/run/user/{os.getuid()}/{display}"):
             return False, f"WAYLAND_DISPLAY={display} but that socket does not exist"
@@ -69,6 +71,10 @@ def _wayland(_cfg: Config) -> tuple[bool, str]:
 
 
 def _mic(_cfg: Config) -> tuple[bool, str]:
+    # PortAudio resolves the PipeWire socket through this at import time, so it
+    # cannot be patched in afterwards (systemd --user always sets it; sudo/ssh do not).
+    if not os.environ.get("XDG_RUNTIME_DIR"):
+        return False, "XDG_RUNTIME_DIR is unset — run this in your graphical session"
     try:
         import sounddevice as sd
 
