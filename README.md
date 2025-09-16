@@ -155,4 +155,4 @@ unit instead of starting the daemon by hand.
 - Audio stays in RAM: no temp files, no disk writes.
 - The model stays resident; `Restart=on-failure` covers GPU driver hiccups.
 - Optional LLM cleanup (`llama-server`) is not wired up yet — `cleanup_hotkey` currently behaves
-  like `hotkey`.
+  like `hotkey`. Tracked in [TODO.md](TODO.md).
